@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        native-lib
+        ffmpeg
 
         # Sets the library as a shared library.
         SHARED
@@ -36,9 +36,21 @@ find_library( # Sets the name of the path variable.
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
-target_link_libraries( # Specifies the target library.
-        native-lib
+set(my_lib_path ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI})
+# 路径设置错误
+#set(my_lib_path /Users/wys/androidproject/ceceproject/FFmpegProject/app/libs/armeabi-v7a)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${my_lib_path}")
 
+include_directories(src/main/cpp/include)
+
+target_link_libraries( # Specifies the target library.
+        ffmpeg
+        avfilter
+        avformat
+        avcodec
+        avutil
+        swresample
+        swscale
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
