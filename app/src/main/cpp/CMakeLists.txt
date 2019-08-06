@@ -51,6 +51,9 @@ target_link_libraries( # Specifies the target library.
         avutil
         swresample
         swscale
+        android
+        z
+        OpenSLES
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})

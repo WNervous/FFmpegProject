@@ -1,29 +1,31 @@
 package com.wys.ffmpegproject;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.SurfaceView;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("ffmpeg");
-    }
+    private SurfaceView   surfaceView;
+    private PlayerManager playerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Example of a call to a native method
-        TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        initView();
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
+    private void initView() {
+        surfaceView = findViewById(R.id.surfaceView);
+        playerManager = new PlayerManager();
+        playerManager.setSurfaceView(surfaceView);
+    }
+
+
+    public void open(View view) {
+//        String uri = "android.resource://" + getPackageName() + "/" + R.raw.abc;
+        playerManager.start("rtmp://58.200.131.2:1935/livetv/hunantv");
+    }
 }
